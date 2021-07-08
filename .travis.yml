@@ -11,12 +11,12 @@ script:
  - docker run -e CI=true carlosfib/client-test npm test
 
 after_success:
- - docker build -t carlosfib/client ./client
- - docker build -t carlosfib/nginx ./nginx
- - docker build -t carlosfib/server ./server
- - docker build -t carlosfib/worker ./worker
+ - docker build -t 19920508/client ./client
+ - docker build -t 19920508/nginx ./nginx
+ - docker build -t 19920508/server ./server
+ - docker build -t 19920508/worker ./worker
  - echo "$DOCKER_PASSWORD" | docker login - u "$DOCKER_ID" --password-stdin
- - docker push carlosfib/client
- - docker push carlosfib/nginx
- - docker push carlosfib/server
- - docker push carlosfib/worker
+ - docker push 19920508/client
+ - docker push 19920508/nginx
+ - docker push 19920508/server
+ - docker push 19920508/worker
