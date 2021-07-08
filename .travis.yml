@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+ - docker
+
+before_install:
+  - docker build -t carlosfib/client-test -f ./client/Dockerfile.dev ./client
+
+
+script:
+ - docker run -e CI=true USERNAME/react-test npm test
+
+after_success:
+ - docker build -t carlosfib/client ./client
+ - docker build -t carlosfib/nginx ./nginx
+ - docker build -t carlosfib/server ./server
+ - docker build -t carlosfib/worker ./worker
+ - echo "$DOCKER_PASSWORD" | docker login - u "$DOCKER_ID" --password-stdin
+ - docker push carlosfib/client
+ - docker push carlosfib/nginx
+ - docker push carlosfib/server
+ - docker push carlosfib/worker
